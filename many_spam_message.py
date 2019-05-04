@@ -5,13 +5,13 @@ import random as ran
 import sys, time
 
 class spamMsg:
-    charSamples = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z',
+    CHARSAMPLES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z',
                    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-    charSamplesExt = ['py', 'py', 'py', 'py', 'll', 'll', 'll', 'deb', 'json']
-    progressLoaded = ['#', '|', 'H', 'X', '█']
-    progressNotLoaded = ['-', '=', ' ', '_']
-    #colourfulRate = [0, 0, 0, 0, 0, 0, 0, 1]
-    colours = [32, 33, 34, 36, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37,
+    CHARSAMPLESEXT = ['py', 'py', 'py', 'py', 'll', 'll', 'll', 'deb', 'json']
+    PROGRESSLOADED = ['#', '|', 'H', 'X', '█']
+    PROGRESSNOTLOADED = ['-', '=', ' ', '_']
+    #COLOURFULRATE = [0, 0, 0, 0, 0, 0, 0, 1]
+    COLOURS = [32, 33, 34, 36, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37,
                37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37]
     # printNums() prints decimal integers in rows. Integers are random from [start] to [end]
     # [times] is how many times to repeat (in line)
@@ -20,26 +20,26 @@ class spamMsg:
         for _j in range(times):
             sys.stdout.flush()
             toPrint = ran.randint(start, end)
-            print('\033[1;%dm %d \033[0m' % (ran.choice(spamMsg.colours), toPrint), end = ' ')
+            print('\033[1;%dm %d \033[0m' % (ran.choice(spamMsg.COLOURS), toPrint), end = ' ')
             time.sleep(ran.uniform(0.05, 0.1))
         print()
     # printChar() prints a number and a random sequence of characters
     #   printChar: None -> None
     def printChar(self):
         print(ran.randint(1000, 9999), 
-        ''.join(ran.sample(spamMsg.charSamples, ran.randint(3, 20))))
+        ''.join(ran.sample(spamMsg.CHARSAMPLES, ran.randint(3, 20))))
     class spamFile:
         # getaFile() returns a random file name
         # getaFile: None -> Str
         def getaFile(self):
-            return (''.join(ran.sample(spamMsg.charSamples, ran.randint(3, 9))) + '.' + 
-             ran.choice(spamMsg.charSamplesExt))
+            return (''.join(ran.sample(spamMsg.CHARSAMPLES, ran.randint(3, 9))) + '.' + 
+             ran.choice(spamMsg.CHARSAMPLESEXT))
         # printFileValue(current, total) prints spam file analysis. [total] and [current] are random
         # printFileValue: Int Int -> None
         def printFileValue(self, current, total): #| [total] is not used here
             fileName = spamMsg().spamFile().getaFile()                                           #|      
             print('Analysing file No.%d \033[1;%dm %s \033[0m'                                   #|
-             % (current, ran.choice(spamMsg.colours), fileName), end ='')                        #|
+             % (current, ran.choice(spamMsg.COLOURS), fileName), end ='')                        #|
             if ran.choice([0, 0, 0, 0, 0, 0, 1]): #| true or false is random                     #|
                 print('\n The file %s is either removed or corrupted. It is skipped.' % fileName)#| spam message
             else:                                                                                #|
@@ -50,8 +50,8 @@ class spamMsg:
         def printFileKey(self, length, current, total): #| [total] is not used here
             fileName = spamMsg().spamFile().getaFile()
             print('*** The file No.%d \033[1;%dm %s \033[0m is parsed with KEY \033[0;33m%s\033[0m.' 
-             % (current, ran.choice(spamMsg.colours), fileName, 
-             str.upper(''.join(ran.sample(spamMsg.charSamples, length)))))
+             % (current, ran.choice(spamMsg.COLOURS), fileName, 
+             str.upper(''.join(ran.sample(spamMsg.CHARSAMPLES, length)))))
     # printKey(length) prints a spam key, [length] is the length of each segment
     #   printKey: Int -> None
     def printKey(self, length):
@@ -60,7 +60,7 @@ class spamMsg:
         for j in range(myRange):
             for _k in range(length):
                 sys.stdout.flush()
-                print(str.upper(ran.choice(spamMsg.charSamples)), end = '')
+                print(str.upper(ran.choice(spamMsg.CHARSAMPLES)), end = '')
                 time.sleep(0.05)
             if j < myRange - 1: print(end = '-')
         print()
@@ -113,7 +113,7 @@ class spamMsg:
             print('|', end = '')
             if ran.choice([0, 0, 1]):
                 print('-' * ran.randint(5, length) + '\033[1;%dm %s \033[0m' 
-                 % (ran.choice(spamMsg.colours), spamMsg().spamFile().getaFile()))
+                 % (ran.choice(spamMsg.COLOURS), spamMsg().spamFile().getaFile()))
                 if ran.choice([0, 0, 1]):
                     spamMsg().spamTree(start, end // 2, length // 2, '|' + ' ' * ran.randint(5, length // 3))
             else: print()
@@ -134,8 +134,8 @@ def main():
             if j % 3 == 0: spam.printChar()                          #|
             if j % ran.randint(1, 10): spam.printNums(100, 9999, 1)  #| make random
             spam.spamBar(ran.randint(10, 20), ran.randint(5, 10), 0, 
-             [ran.choice(spam.progressLoaded),                #|lambda: does nothing
-              ran.choice(spam.progressNotLoaded)]).spamProgress(lambda x, y: x, [0.01, 0.05])
+             [ran.choice(spam.PROGRESSLOADED),                #|lambda: does nothing
+              ran.choice(spam.PROGRESSNOTLOADED)]).spamProgress(lambda x, y: x, [0.01, 0.05])
         for _j in range(ran.randint(1, 5)): spam.printKey(ran.randint(4, 6))
         spam.spamBar(5, style = [' ◆ ']).spamDots()
 
